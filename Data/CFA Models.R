@@ -8,10 +8,11 @@ library(lavaan)
 
 
 # Specify the two factor model
-Model.2factor <- '## Latent factor specification
+Model.2factor <- '## Victimization factor
                     Victimization =~ Q66A+Q66B+Q66C+Q66D+Q66E+Q66F+Q66G+Q66H+Q66I+Q66J+Q66K
+                  ## Perpetration factor
                     Perpetration =~ Q68A+Q68B+Q68C+Q68D+Q68E+Q68F+Q68G+Q68H+Q68I+Q68J+Q68K
-                  ## Latent factor covariance
+                  ## Covariance between Vict and Perp
                     Victimization ~~ Perpetration'
 # Fit the model as a CFA
 fit.2factor <- cfa(model = Model.2factor, 
@@ -29,10 +30,11 @@ summary(object = fit.2factor,
 
 
 # Specify the two factor model
-Model.2factor <- '## Latent factor specification
+Model.2factor <- '## Victimization factor
                     Victimization =~ Q66A+Q66B+Q66C+Q66D+Q66E+Q66F+Q66G+Q66H+Q66I+Q66J+Q66K
+                  ## Perpetration factor
                     Perpetration =~ Q68A+Q68B+Q68C+Q68D+Q68E+Q68F+Q68G+Q68H+Q68I+Q68J+Q68K
-                  ## Latent Factor covariance
+                  ## Covariance between Vict and Perp
                     Victimization ~~ Perpetration'
 # Fit the model as a CFA
 fit.2factor <- cfa(model = Model.2factor, 
@@ -44,14 +46,15 @@ summary(object = fit.2factor,
         standardized = TRUE)
 
 
-## TWO FACTOR MODEL ##
+## TWO FACTOR MODEL: WLSMV ##
 
 
 # Specify the two factor model
-Model.2factor <- '## Latent factor specification
+Model.2factor <- '## Victimization factor
                     Victimization =~ Q66A+Q66B+Q66C+Q66D+Q66E+Q66F+Q66G+Q66H+Q66I+Q66J+Q66K
+                  ## Perpetration factor
                     Perpetration =~ Q68A+Q68B+Q68C+Q68D+Q68E+Q68F+Q68G+Q68H+Q68I+Q68J+Q68K
-                  ## Latent factor covariance
+                  ## Covariance between Vict and Perp
                     Victimization ~~ Perpetration'
 # Fit the model as a CFA
 fit.2factor <- cfa(model = Model.2factor, 
