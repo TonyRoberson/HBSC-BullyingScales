@@ -8,11 +8,10 @@ library(lavaan)
 
 
 # Specify the two factor model
-Model.2factor <- '## Victimization factor
+Model.2factor <- '## Latent factor specification
                     Victimization =~ Q66A+Q66B+Q66C+Q66D+Q66E+Q66F+Q66G+Q66H+Q66I+Q66J+Q66K
-                  ## Perpetration factor
                     Perpetration =~ Q68A+Q68B+Q68C+Q68D+Q68E+Q68F+Q68G+Q68H+Q68I+Q68J+Q68K
-                  ## Covariance between Vict and Perp
+                  ## Latent factor covariance
                     Victimization ~~ Perpetration'
 # Fit the model as a CFA
 fit.2factor <- cfa(model = Model.2factor, 
@@ -30,11 +29,10 @@ summary(object = fit.2factor,
 
 
 # Specify the two factor model
-Model.2factor <- '## Victimization factor
+Model.2factor <- '## Latent factor specification
                     Victimization =~ Q66A+Q66B+Q66C+Q66D+Q66E+Q66F+Q66G+Q66H+Q66I+Q66J+Q66K
-                  ## Perpetration factor
                     Perpetration =~ Q68A+Q68B+Q68C+Q68D+Q68E+Q68F+Q68G+Q68H+Q68I+Q68J+Q68K
-                  ## Covariance between Vict and Perp
+                  ## Latent Factor covariance
                     Victimization ~~ Perpetration'
 # Fit the model as a CFA
 fit.2factor <- cfa(model = Model.2factor, 
@@ -50,11 +48,10 @@ summary(object = fit.2factor,
 
 
 # Specify the two factor model
-Model.2factor <- '## Victimization factor
+Model.2factor <- '## Latent factor specification
                     Victimization =~ Q66A+Q66B+Q66C+Q66D+Q66E+Q66F+Q66G+Q66H+Q66I+Q66J+Q66K
-                  ## Perpetration factor
                     Perpetration =~ Q68A+Q68B+Q68C+Q68D+Q68E+Q68F+Q68G+Q68H+Q68I+Q68J+Q68K
-                  ## Covariance between Vict and Perp
+                  ## Latent factor covariance
                     Victimization ~~ Perpetration'
 # Fit the model as a CFA
 fit.2factor <- cfa(model = Model.2factor, 
@@ -117,13 +114,13 @@ summary(object = fit.3factor.MLR,
 
 # Specify the three factor model
 Model.3factor <-'## Latent factor specification
-tradVict =~ Q66A+Q66B+Q66C+Q66D+Q66E+Q66F+Q66G
-cyberVict  =~ Q66H+Q66I+Q66J+Q66K
-Perp =~ Q68A+Q68B+Q68C+Q68D+Q68E+Q68F+Q68G+Q68H+Q68I+Q68J+Q68K
-## Latent variable covariances
-tradVict ~~ cyberVict
-tradVict ~~ Perp
-cyberVict ~~ Perp'
+                  tradVict =~ Q66A+Q66B+Q66C+Q66D+Q66E+Q66F+Q66G
+                  cyberVict  =~ Q66H+Q66I+Q66J+Q66K
+                  Perp =~ Q68A+Q68B+Q68C+Q68D+Q68E+Q68F+Q68G+Q68H+Q68I+Q68J+Q68K
+                ## Latent variable covariances
+                  tradVict ~~ cyberVict
+                  tradVict ~~ Perp
+                  cyberVict ~~ Perp'
 # Fit the model as a CFA
 fit.3factor.WLSMV <- cfa(model = Model.3factor, 
                        estimator = "WLSMV",
@@ -132,7 +129,6 @@ fit.3factor.WLSMV <- cfa(model = Model.3factor,
 summary(object = fit.3factor.WLSMV, 
         fit.measures = TRUE,
         standardized = TRUE)
-
 
 
 ## FOUR FACTOR MODEL: Bollen-Stine ML ##
