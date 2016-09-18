@@ -19,7 +19,7 @@ fit.2factor <- cfa(model = Model.2factor,
                    estimator = 'ML',
                    test = "bollen-stine",
                    bootstrap = 2000,
-                   data = s2rel)
+                   data = S2)
 # Print fit summary
 summary(object = fit.2factor,
         fit.measures = TRUE,
@@ -39,7 +39,7 @@ Model.2factor <- '## Victimization factor
 # Fit the model as a CFA
 fit.2factor <- cfa(model = Model.2factor, 
                    estimator = 'MLR',
-                   data = s2rel)
+                   data = S2)
 # Print fit summary
 summary(object = fit.2factor,
         fit.measures = TRUE,
@@ -59,7 +59,7 @@ Model.2factor <- '## Victimization factor
 # Fit the model as a CFA
 fit.2factor <- cfa(model = Model.2factor, 
                    estimator = 'WLSMV',
-                   data = s2rel)
+                   data = S2)
 # Print fit summary
 summary(object = fit.2factor,
         fit.measures = TRUE,
@@ -83,7 +83,7 @@ fit.3factor <- cfa(model = Model.3factor,
                    estimator = "ML",
                    test = "bollen-stine",
                    bootstrap = 2000,
-                   data = s2rel)
+                   data = S2)
 # Print fit summary
 summary(object = fit.3factor, 
         fit.measures = TRUE,
@@ -105,7 +105,7 @@ Model.3factor <-'## Latent factor specification
 # Fit the model as a CFA
 fit.3factor.MLR <- cfa(model = Model.3factor, 
                    estimator = "MLR",
-                   data = s2rel)
+                   data = S2)
 # Print fit summary
 summary(object = fit.3factor.MLR, 
         fit.measures = TRUE,
@@ -127,7 +127,7 @@ Model.3factor <-'## Latent factor specification
 # Fit the model as a CFA
 fit.3factor.WLSMV <- cfa(model = Model.3factor, 
                        estimator = "WLSMV",
-                       data = s2rel)
+                       data = S2)
 # Print fit summary
 summary(object = fit.3factor.WLSMV, 
         fit.measures = TRUE,
@@ -155,7 +155,7 @@ fit.4factor <- cfa(model = Model.4factor,
                    estimator = "ML",
                    test = "bollen-stine",
                    bootstrap = 2000,
-                   data = s2rel)
+                   data = S2)
 # Print fit summary
 summary(object = fit.4factor, 
         fit.measures = TRUE,
@@ -181,7 +181,7 @@ Model.4factor <- '## Latent factor specification
 # Fit the model as a CFA
 fit.4factor.MLR <- cfa(model = Model.4factor, 
                    estimator = "MLR",
-                   data = s2rel)
+                   data = S2)
 # Print fit summary
 summary(object = fit.4factor.MLR, 
         fit.measures = TRUE,
@@ -207,7 +207,7 @@ Model.4factor <- '## Latent factor specification
 # Fit the model as a CFA
 fit.4factor.WLSMV <- cfa(model = Model.4factor, 
                        estimator = "WLSMV",
-                       data = s2rel)
+                       data = S2)
 # Print fit summary
 summary(object = fit.4factor.WLSMV, 
         fit.measures = TRUE,
