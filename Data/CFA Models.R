@@ -1,5 +1,9 @@
 ## CFA Models
 
+## Import second split half of data (S2)
+S2 <- read.csv(file = "HBSC Bullying Scale_S2_CFA.csv", 
+               stringsAsFactors=FALSE)
+
 ## Load relevant packages
 library(lavaan)
 

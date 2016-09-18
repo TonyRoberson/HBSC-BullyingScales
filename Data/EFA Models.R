@@ -1,6 +1,10 @@
 ## EFA models 
 ## Data considered ordered categorical rather than continuous
 
+## Import first random split half of data (S1)
+S1 <- read.csv("HBSC Bullying Scale_S1_EFA.csv", 
+               stringsAsFactors=FALSE)
+
 ## Load relevant packages
 library(psych)
 library(polycor)
@@ -25,6 +29,7 @@ write.csv(x = item.desc,
 
 
 ## Check results from unconstrained principal axis factoring analysis
+## using the polychoric correlation matrix
 efa.pa <- fa.poly(x = efa, 
                   fm = "pa", 
                   rotate = "promax")
