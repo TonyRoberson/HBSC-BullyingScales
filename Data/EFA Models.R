@@ -14,13 +14,14 @@ efa <- as.data.frame(
               "Q68A","Q68B","Q68C","Q68D","Q68E","Q68F",
               "Q68G","Q68H","Q68I","Q68J","Q68K")])
 
+
 ## Get descriptives for all items
 item.desc <- as.data.frame(describe(efa))
 # View data frame
 View(item.desc)
-# Export item descriptives to .csv file
+# Export item descriptives to .csv file in working directory
 write.csv(x = item.desc, 
-          file = "Item.Descriptives")
+          file = "ItemDescriptives.csv")
 
 
 ## Check results from unconstrained principal axis factoring analysis
