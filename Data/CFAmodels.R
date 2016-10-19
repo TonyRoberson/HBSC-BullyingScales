@@ -78,12 +78,12 @@ summary(object = fit.2factor,
 setDT(S2.cfa)
 ## Victimization
 S2.cfa$vict.sum <- S2.cfa[, .(vict.sum = rowSums(.SD)),
-                          SDcols = c("vVerbal", "vExclusion", "vPhysical", "vRelational", "vRacial",
-                                      "vReligious", "vSexual", "vComp", "vCell", "vCompOut", "vCellOut")]                            
+                            .SDcols = c("vVerbal", "vExclusion", "vPhysical", "vRelational", "vRacial",
+                                        "vReligious", "vSexual", "vComp", "vCell", "vCompOut", "vCellOut")]                            
 ## Perpetration
 S2.cfa$perp.sum <- S2.cfa[, .(perp.sum = rowSums(.SD)), 
-                          .SDcols = c("pVerbal", "pExclusion", "pPhysical", "pRelational", "pRacial", 
-                                      "pReligious", "pSexual", "pComp", "pCell", "pCompOut", "pCellOut")]                            
+                            .SDcols = c("pVerbal", "pExclusion", "pPhysical", "pRelational", "pRacial", 
+                                        "pReligious", "pSexual", "pComp", "pCell", "pCompOut", "pCellOut")]                            
 
 
 ## Calculate descriptives for scales
