@@ -6,39 +6,52 @@ library(data.table)
 library(psych)
 library(semTools)
 
+
 ## Import second split half of data (S2)
 S2 <- read.csv(file = "HBSC Bullying Scale_S2_CFA.csv", 
                stringsAsFactors=FALSE)
 
+
 ## Create data frame of only the relevant demographic and bullying items in S2
-S2.cfa <- as.data.frame(
-  S2[,c("METRO3","Q1","Q3B","Q4","Q6_COMP","AFFLUENT",
+S2.cfa <- data.frame(
+  S2[,c("CASEID","METRO3","Q1","Q3B","Q4","Q6_COMP","AFFLUENT",
         "Q66A","Q66B","Q66C","Q66D","Q66E","Q66F",
         "Q66G","Q66H","Q66I","Q66J","Q66K",
         "Q68A","Q68B","Q68C","Q68D","Q68E","Q68F",
         "Q68G","Q68H","Q68I","Q68J","Q68K")])
 # Give columns meaningful names
 setnames(x = S2.cfa, 
-         old = c("METRO3","Q1","Q3B","Q4","Q6_COMP","AFFLUENT",
+         old = c("CASEID","METRO3","Q1","Q3B","Q4","Q6_COMP","AFFLUENT",
                  "Q66A","Q66B","Q66C","Q66D","Q66E","Q66F",
                  "Q66G","Q66H","Q66I","Q66J","Q66K",
                  "Q68A","Q68B","Q68C","Q68D","Q68E","Q68F",
                  "Q68G","Q68H","Q68I","Q68J","Q68K"), 
-         new = c("broadResidence","sex","age","gradeLevel","race","famAffluence",
+         new = c("ID","broadResidence","sex","age","gradeLevel","race","famAffluence",
                   "vVerbal", "vExclusion", "vPhysical", "vRelational", "vRacial", 
                  "vReligious", "vSexual", "vComp", "vCell", "vCompOut", "vCellOut",
                  "pVerbal", "pExclusion", "pPhysical", "pRelational", "pRacial", 
                  "pReligious", "pSexual", "pComp", "pCell", "pCompOut", "pCellOut"))
+# Recode missing data from -9 to NA
+# Age, Race, and Family affluence
+S2.cfa$age[S2.cfa$age == -9] <- NA
+S2.cfa$race[S2.cfa$race == -9] <- NA
+S2.cfa$famAffluence[S2.cfa$famAffluence == -9] <- NA
+#Set relevant variables as factor
+S2.cfa$broadResidence <- as.factor(S2.cfa$broadResidence)
+S2.cfa$race <- as.factor(S2.cfa$race)
+S2.cfa$gradeLevel <- as.factor(S2.cfa$gradeLevel)
+
 
 ## Get descriptives for S2.cfa items
-S2.ItemDesc <- as.data.frame(describe(S2.cfa))
-# View data frame
+S2.ItemDesc <- data.frame(describe(S2.cfa))
+S2.ItemDesc$vars <- colnames(S2.cfa)
+# View data table
 View(S2.ItemDesc)
 # Export item descriptives to .csv file in working directory
 write.csv(x = S2.ItemDesc, file = "S2_ItemDescriptives.csv")
 
 
-## TWO FACTOR MODEL ##
+####### TWO FACTOR CFA MODEL #######
 ## Follow-up test from EFA results
 
 
@@ -61,8 +74,40 @@ summary(object = fit.2factor,
         standardized = TRUE)
 
 
+## Calculate 2 factor composite scale scores
+setDT(S2.cfa)
+## Victimization
+S2.cfa$vict.sum <- S2.cfa[, .(vict.sum = rowSums(.SD)),
+                          SDcols = c("vVerbal", "vExclusion", "vPhysical", "vRelational", "vRacial",
+                                      "vReligious", "vSexual", "vComp", "vCell", "vCompOut", "vCellOut")]                            
+## Perpetration
+S2.cfa$perp.sum <- S2.cfa[, .(perp.sum = rowSums(.SD)), 
+                          .SDcols = c("pVerbal", "pExclusion", "pPhysical", "pRelational", "pRacial", 
+                                      "pReligious", "pSexual", "pComp", "pCell", "pCompOut", "pCellOut")]                            
 
-## MEASUREMENT INVARIANCE ##
+
+## Calculate descriptives for scales
+setDF(S2.cfa)
+## Victimization
+summary(S2.cfa$vict.sum)
+describe(S2.cfa$vict.sum)
+# Plot distribution 
+histogram(x = S2.cfa$vict.sum)
+# Internal consistency
+alpha(x = S2.cfa[,c("vVerbal", "vExclusion", "vPhysical", "vRelational", "vRacial", 
+                    "vReligious", "vSexual", "vComp", "vCell", "vCompOut", "vCellOut")])
+## Perpetration
+summary(S2.cfa$perp.sum)
+describe(S2.cfa$perp.sum)
+# Plot distribution
+histogram(S2.cfa$perp.sum)
+# Internal consistency
+alpha(x = S2.cfa[,c("pVerbal", "pExclusion", "pPhysical", "pRelational", "pRacial", 
+                    "pReligious", "pSexual", "pComp", "pCell", "pCompOut", "pCellOut")])
+
+
+
+###### MEASUREMENT AND STRUCTURAL INVARIANCE #######
 
 
 # Indicate the relevant fit indices
@@ -182,6 +227,7 @@ fitMeasures(gradeLevel.means.fit, fit.indices)
 
 
 ## By student race
+## Only White, Black/African American, and Hispanic groups had sufficient sample sizes for comparison
 
 # Configural fit
 race.configural.fit <- cfa(model = Model.2factor, 
