@@ -2,10 +2,9 @@
 
 ## Load relevant packages
 library(lavaan)
-library(data.table)
 library(psych)
 library(semTools)
-
+library(data.table)
 
 ## Import second split half of data (S2)
 S2 <- read.csv(file = "HBSC Bullying Scale_S2_CFA.csv", 
@@ -20,7 +19,7 @@ S2.cfa <- data.frame(
         "Q68A","Q68B","Q68C","Q68D","Q68E","Q68F",
         "Q68G","Q68H","Q68I","Q68J","Q68K")])
 # Give columns meaningful names
-setnames(x = S2.cfa, 
+setnames(x = S2.cfa,
          old = c("CASEID","METRO3","Q1","Q3B","Q4","Q6_COMP","AFFLUENT",
                  "Q66A","Q66B","Q66C","Q66D","Q66E","Q66F",
                  "Q66G","Q66H","Q66I","Q66J","Q66K",
@@ -38,15 +37,15 @@ S2.cfa$race[S2.cfa$race == -9] <- NA
 S2.cfa$famAffluence[S2.cfa$famAffluence == -9] <- NA
 #Set relevant variables as factor
 S2.cfa$broadResidence <- as.factor(S2.cfa$broadResidence)
+S2.cfa$sex <- as.factor(S2.cfa$sex)
 S2.cfa$race <- as.factor(S2.cfa$race)
 S2.cfa$gradeLevel <- as.factor(S2.cfa$gradeLevel)
 
 
-## Get descriptives for S2.cfa items
+## Get descriptives for all items
 S2.ItemDesc <- data.frame(describe(S2.cfa))
-S2.ItemDesc$vars <- colnames(S2.cfa)
-# View data table
-View(S2.ItemDesc)
+describe(S2.cfa)
+summary(S2.cfa)
 # Export item descriptives to .csv file in working directory
 write.csv(x = S2.ItemDesc, file = "S2_ItemDescriptives.csv")
 
@@ -75,18 +74,20 @@ summary(object = fit.2factor,
 
 
 ## Calculate 2 factor composite scale scores
+## NOTE: Temporarily convert S2.cfa to data table to calculate sum scores
 setDT(S2.cfa)
 ## Victimization
 S2.cfa$vict.sum <- S2.cfa[, .(vict.sum = rowSums(.SD)),
-                          SDcols = c("vVerbal", "vExclusion", "vPhysical", "vRelational", "vRacial",
-                                      "vReligious", "vSexual", "vComp", "vCell", "vCompOut", "vCellOut")]                            
+                            .SDcols = c("vVerbal", "vExclusion", "vPhysical", "vRelational", "vRacial",
+                                        "vReligious", "vSexual", "vComp", "vCell", "vCompOut", "vCellOut")]                            
 ## Perpetration
 S2.cfa$perp.sum <- S2.cfa[, .(perp.sum = rowSums(.SD)), 
-                          .SDcols = c("pVerbal", "pExclusion", "pPhysical", "pRelational", "pRacial", 
-                                      "pReligious", "pSexual", "pComp", "pCell", "pCompOut", "pCellOut")]                            
+                            .SDcols = c("pVerbal", "pExclusion", "pPhysical", "pRelational", "pRacial", 
+                                        "pReligious", "pSexual", "pComp", "pCell", "pCompOut", "pCellOut")]                            
 
 
 ## Calculate descriptives for scales
+## Note: Convert S2.cfa back to data table for following analyses
 setDF(S2.cfa)
 ## Victimization
 summary(S2.cfa$vict.sum)
@@ -170,6 +171,7 @@ sex.means.fit <- cfa(model = Model.2factor,
 fitMeasures(sex.means.fit, fit.indices)
 
 
+
 ## By Grade-level
 
 # Configural fit
@@ -226,6 +228,7 @@ gradeLevel.means.fit <- cfa(model = Model.2factor,
 fitMeasures(gradeLevel.means.fit, fit.indices)
 
 
+
 ## By student race
 ## Only White, Black/African American, and Hispanic groups had sufficient sample sizes for comparison
 
@@ -280,7 +283,7 @@ fitMeasures(race.var.fit, fit.indices)
 
 # Add latent means constraint
 race.means.fit <- cfa(model = Model.2factor, 
-                     data = S2.cfa, 
+                     data = S2.cfa,
                      group = "race",
                      group.label = c("1","2","7"),
                      estimator = "WLSMV", 
