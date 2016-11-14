@@ -115,7 +115,34 @@ alpha(x = S2.cfa[,c("pVerbal", "pExclusion", "pPhysical", "pRelational", "pRacia
 fit.indices <- c("chisq.scaled", "df.scaled", "pvalue.scaled", "rmsea.scaled", "rmsea.ci.lower.scaled",
                  "rmsea.ci.upper.scaled", "srmr", "cfi.scaled")
 
-## By sex/gender
+### By sex/gender
+
+## Individual groups
+
+# Male fit
+male.S2 <- cfa(model = Model.2factor, 
+                       data = S2.cfa,
+                       group = "sex",
+                       group.label = "1",
+                       estimator = "WLSMV", 
+                       ordered = names(S2.cfa))
+summary(object = male.S2,
+        fit.measures = TRUE,
+        standardized = TRUE)
+
+# Female fit
+female.S2 <- cfa(model = Model.2factor, 
+               data = S2.cfa,
+               group = "sex",
+               group.label = "2",
+               estimator = "WLSMV", 
+               ordered = names(S2.cfa))
+summary(object = female.S2,
+        fit.measures = TRUE,
+        standardized = TRUE)
+
+
+## Measurement Invariance
 
 # Configural fit
 sex.configural.fit <- cfa(model = Model.2factor, 
@@ -152,6 +179,9 @@ sex.strict.fit <- cfa(model = Model.2factor,
                       group.equal = c("loadings", "intercepts", "residuals"))
 fitMeasures(sex.strict.fit, fit.indices)
 
+
+## Structural Invariance
+
 # Add latent variance constraint
 sex.var.fit <- cfa(model = Model.2factor, 
                       data = S2.cfa, 
@@ -170,9 +200,83 @@ sex.means.fit <- cfa(model = Model.2factor,
                    group.equal = c("loadings", "intercepts", "residuals", "lv.variances", "means"))
 fitMeasures(sex.means.fit, fit.indices)
 
+## Scaled-shifted chi-square difference test
+lavTestLRT(sex.configural.fit, sex.weak.fit, sex.strong.fit, 
+           sex.var.fit, sex.means.fit, method = "satorra.bentler.2010")
 
 
-## By Grade-level
+### By Grade-level
+
+## Individual groups
+
+# 5th grade fit
+fifth.S2 <- cfa(model = Model.2factor, 
+               data = S2.cfa,
+               group = "gradeLevel",
+               group.label = "5",
+               estimator = "WLSMV", 
+               ordered = names(S2.cfa))
+summary(object = fifth.S2,
+        fit.measures = TRUE,
+        standardized = TRUE)
+
+# 6th grade fit
+sixth.S2 <- cfa(model = Model.2factor, 
+                data = S2.cfa,
+                group = "gradeLevel",
+                group.label = "6",
+                estimator = "WLSMV", 
+                ordered = names(S2.cfa))
+summary(object = sixth.S2,
+        fit.measures = TRUE,
+        standardized = TRUE)
+
+# 7th grade fit
+seventh.S2 <- cfa(model = Model.2factor, 
+                data = S2.cfa,
+                group = "gradeLevel",
+                group.label = "7",
+                estimator = "WLSMV", 
+                ordered = names(S2.cfa))
+summary(object = seventh.S2,
+        fit.measures = TRUE,
+        standardized = TRUE)
+
+# 8th grade fit
+eighth.S2 <- cfa(model = Model.2factor, 
+                data = S2.cfa,
+                group = "gradeLevel",
+                group.label = "8",
+                estimator = "WLSMV", 
+                ordered = names(S2.cfa))
+summary(object = eighth.S2,
+        fit.measures = TRUE,
+        standardized = TRUE)
+
+# 9th grade fit
+ninth.S2 <- cfa(model = Model.2factor, 
+                data = S2.cfa,
+                group = "gradeLevel",
+                group.label = "9",
+                estimator = "WLSMV", 
+                ordered = names(S2.cfa))
+summary(object = ninth.S2,
+        fit.measures = TRUE,
+        standardized = TRUE)
+
+# 10th grade fit
+tenth.S2 <- cfa(model = Model.2factor, 
+                data = S2.cfa,
+                group = "gradeLevel",
+                group.label = "10",
+                estimator = "WLSMV", 
+                ordered = names(S2.cfa))
+summary(object = tenth.S2,
+        fit.measures = TRUE,
+        standardized = TRUE)
+
+
+## Measurement Invariance
 
 # Configural fit
 gradeLevel.configural.fit <- cfa(model = Model.2factor, 
@@ -202,12 +306,15 @@ fitMeasures(gradeLevel.strong.fit, fit.indices)
 
 # Strict fit
 gradeLevel.strict.fit <- cfa(model = Model.2factor, 
-                      data = S2.cfa, 
+                      data = S2.cfa,
                       group = "gradeLevel",
                       estimator = "WLSMV", 
                       ordered = names(S2.cfa), 
                       group.equal = c("loadings", "intercepts", "residuals"))
 fitMeasures(gradeLevel.strict.fit, fit.indices)
+
+
+## Sturctural Invariance
 
 # Add latent variance constraint
 gradeLevel.var.fit <- cfa(model = Model.2factor, 
@@ -228,9 +335,54 @@ gradeLevel.means.fit <- cfa(model = Model.2factor,
 fitMeasures(gradeLevel.means.fit, fit.indices)
 
 
+## Scaled chi-squared difference test
+lavTestLRT(gradeLevel.configural.fit, gradeLevel.weak.fit, gradeLevel.strong.fit, 
+      gradeLevel.var.fit, gradeLevel.means.fit, method = "satorra.bentler.2010")
 
-## By student race
-## Only White, Black/African American, and Hispanic groups had sufficient sample sizes for comparison
+
+
+### By student race
+### Note: Only White, Black/African American, and Hispanic/Latino groups had 
+### sufficient sample sizes for comparison
+
+
+## Individual groups
+
+# White fit
+white.S2 <- cfa(model = Model.2factor, 
+                data = S2.cfa,
+                group = "race",
+                group.label = "2",
+                estimator = "WLSMV", 
+                ordered = names(S2.cfa))
+summary(object = white.S2,
+        fit.measures = TRUE,
+        standardized = TRUE)
+
+# Hispanic/Latino fit
+hispanic.S2 <- cfa(model = Model.2factor, 
+                data = S2.cfa,
+                group = "race",
+                group.label = "7",
+                estimator = "WLSMV", 
+                ordered = names(S2.cfa))
+summary(object = hispanic.S2,
+        fit.measures = TRUE,
+        standardized = TRUE)
+
+# Black/African American
+black.S2 <- cfa(model = Model.2factor, 
+                   data = S2.cfa,
+                   group = "race",
+                   group.label = "1",
+                   estimator = "WLSMV", 
+                   ordered = names(S2.cfa))
+summary(object = black.S2,
+        fit.measures = TRUE,
+        standardized = TRUE)
+
+
+## Measurement invariance
 
 # Configural fit
 race.configural.fit <- cfa(model = Model.2factor, 
@@ -271,18 +423,21 @@ race.strict.fit <- cfa(model = Model.2factor,
                       group.equal = c("loadings", "intercepts", "residuals"))
 fitMeasures(race.strict.fit, fit.indices)
 
+
+## Structural invariance
+
 # Add latent variance constraint
 race.var.fit <- cfa(model = Model.2factor, 
                    data = S2.cfa, 
                    group = "race",
                    group.label = c("1","2","7"),
-                   estimator = "WLSMV", 
+                   estimator = "WLSMV",
                    ordered = names(S2.cfa), 
                    group.equal = c("loadings", "intercepts", "residuals", "lv.variances"))
 fitMeasures(race.var.fit, fit.indices)
 
 # Add latent means constraint
-race.means.fit <- cfa(model = Model.2factor, 
+race.means.fit <- cfa(model = Model.2factor,
                      data = S2.cfa,
                      group = "race",
                      group.label = c("1","2","7"),
@@ -290,3 +445,7 @@ race.means.fit <- cfa(model = Model.2factor,
                      ordered = names(S2.cfa), 
                      group.equal = c("loadings", "intercepts", "residuals", "lv.variances", "means"))
 fitMeasures(race.means.fit, fit.indices)
+
+## Scaled chi-squared difference test
+lavTestLRT(race.configural.fit, race.weak.fit, race.strong.fit, 
+           race.var.fit, race.means.fit, method = "satorra.bentler.2010")
